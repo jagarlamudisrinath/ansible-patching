@@ -2,5 +2,6 @@
 - hosts: all
   become: yes
   roles:
+    - pre_update
     - yum_update
     - post_update
