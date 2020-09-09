@@ -1,0 +1,18 @@
+---
+- hosts: yumserver
+  become: yes
+  roles:
+    - create_repo
+    - common
+
+- hosts: webservers
+  become: yes
+  roles:
+    - httpd
+    - common
+
+- hosts: dbservers
+  become: yes
+  roles:
+    - mysql
+    - common

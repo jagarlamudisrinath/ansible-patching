@@ -1,0 +1,47 @@
+Vagrant.configure("2") do |config|
+  config.ssh.private_key_path = ["keys/id_rsa", "~/.vagrant.d/insecure_private_key"]
+  config.ssh.insert_key = false
+  config.vm.box_check_update = false
+  config.vm.define "vm01" do |vm01|
+    vm01.vm.box = "centos/7"
+    vm01.vm.network "private_network", ip: "192.168.5.10"
+    vm01.vm.provision "file", source: "keys/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+    vm01.vm.provider "virtualbox" do |vb|
+      vb.name = "devyumserver"
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+  end
+  config.vm.define "vm02" do |vm02|
+    vm02.vm.box = "centos/7"
+    vm02.vm.box_version = "1902.01"
+    vm02.vm.network "private_network", ip: "192.168.5.20"
+    vm02.vm.provision "file", source: "keys/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+    vm02.vm.provider "virtualbox" do |vb|
+      vb.name = "devcentos1"
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+  end
+  config.vm.define "vm03" do |vm03|
+    vm03.vm.box = "generic/oracle7"
+    vm03.vm.box_version = "3.0.8"
+    vm03.vm.network "private_network", ip: "192.168.5.30"
+    vm03.vm.provision "file", source: "keys/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+    vm03.vm.provider "virtualbox" do |vb|
+      vb.name = "devoel1"
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+  end
+  config.vm.define "vm04" do |vm04|
+    vm04.vm.box = "centos/7"
+    vm04.vm.network "private_network", ip: "192.168.5.40"
+    vm04.vm.provision "file", source: "keys/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+    vm04.vm.provider "virtualbox" do |vb|
+      vb.name = "devansible"
+      vb.memory = "4096"
+      vb.cpus = 2
+    end
+  end
+end

@@ -1,0 +1,45 @@
+---
+# tasks file for common
+- name: Ensure hostname set
+  hostname: name={{ inventory_hostname }}
+  tags:
+    - hostname
+
+
+- name: get all repo files
+  find:
+    paths: /etc/yum.repos.d
+    patterns: "*.repo"
+  register: files_to_delete
+
+- name: Ansible remove repo files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+  when: inventory_hostname != "devyumrepocentos"
+
+- name: add centos clienr repository
+  yum_repository:
+    name: centos-repo
+    description: centos 7 repo
+    baseurl: http://192.168.5.10/centos/
+    enabled: 1
+    gpgcheck: 0
+  when: inventory_hostname != "devyumrepocentos" and ansible_distribution == "CentOS"
+
+- name: add OEL client repository
+  yum_repository:
+    name: oracle-repo
+    description: OEL 7 repo
+    baseurl: http://192.168.5.10/oel/
+    enabled: 1
+    gpgcheck: 0
+  when: inventory_hostname != "devyumrepocentos" and ansible_distribution == "OracleLinux"
+
+#- name: Display all variables/facts known for a host
+#  debug:
+#    var: hostvars[inventory_hostname]
+
+
+

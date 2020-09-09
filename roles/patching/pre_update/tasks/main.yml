@@ -1,0 +1,39 @@
+---
+# tasks file for pre_update
+- name: stop webservices
+  systemd:
+    name: httpd
+    state: stopped
+  when: inventory_hostname in groups.webservers
+  tags:
+    - pre_update
+
+- name: stop mysqld
+  systemd:
+    name: mysqld
+    state: stopped
+  when: inventory_hostname in groups.dbservers
+  tags:
+    - pre_update
+
+- name: check service status
+  service_facts:
+  tags:
+    - health
+    - pre_update
+
+- name: checking httpd status
+  debug:
+    var: ansible_facts.services["httpd.service"]["state"]
+  when: inventory_hostname in groups.webservers
+  tags:
+    - health
+    - pre_update
+
+- name: checking mysqld status
+  debug:
+    var: ansible_facts.services["mysqld.service"]["state"]
+  when: inventory_hostname in groups.dbservers
+  tags:
+    - health
+    - pre_update

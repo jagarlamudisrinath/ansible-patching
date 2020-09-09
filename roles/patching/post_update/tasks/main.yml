@@ -1,0 +1,40 @@
+---
+# tasks file for post_update
+- name: Start webservices
+  systemd:
+    name: httpd
+    state: started
+  when: inventory_hostname in groups.webservers
+  tags:
+    - post_update
+
+- name: Start mysqld
+  systemd:
+    name: mysqld
+    state: started
+  when: inventory_hostname in groups.dbservers
+  tags:
+    - post_update
+
+- name: check web service status
+  service_facts:
+  tags:
+    - health
+    - post_update
+
+- name: checking httpd status
+  debug:
+    var: ansible_facts.services["httpd.service"]["state"]
+  when: inventory_hostname in groups.webservers
+  tags:
+    - health
+    - post_update
+
+- name: checking mysqld status
+  debug:
+    var: ansible_facts.services["mysqld.service"]["state"]
+  when: inventory_hostname in groups.dbservers
+  tags:
+    - health
+    - post_update
+

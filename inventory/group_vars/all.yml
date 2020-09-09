@@ -1,0 +1,12 @@
+---
+centos_patches:
+  - rpm
+  - sudo
+
+
+oracle_patches:
+  - curl
+  - rsyslog
+  - ca-certificates
+
+

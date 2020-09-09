@@ -1,0 +1,19 @@
+---
+# tasks file for yum_update
+
+- name: update patches for CentOS
+  yum:
+    name: "{{ centos_patches }}"
+    state: latest
+  when: ansible_distribution == "CentOS"
+  tags:
+    - patch
+
+# tasks file for yum_update
+- name: update patches for Oracle Linux
+  yum:
+    name: "{{ oracle_patches }}"
+    state: latest
+  when: ansible_distribution == "OracleLinux"
+  tags:
+    - patch

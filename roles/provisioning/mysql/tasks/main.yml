@@ -1,0 +1,27 @@
+---
+- name: install mysql repository
+  yum:
+    name: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+    state: present
+
+#- name: install epel relase
+#  yum:
+#    name: epel-release
+#    enablerepo: mysql56-community
+#    state: latest
+
+- name: install mysql database
+  yum:
+    name:
+      - gcc
+      - gcc-c++
+      - kernel-devel
+      - mysql-community-server
+      - python2-devel
+      - MySQL-python
+    state: latest
+
+- name: start my sqlservice
+  systemd:
+    state: started
+    name: mysqld

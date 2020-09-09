@@ -1,0 +1,49 @@
+---
+# tasks file for create_repo
+- name: install httpd and createrepo
+  yum:
+    name:
+      - httpd
+      - createrepo
+    state: latest
+
+- name: Create Directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ centos_repo_path }}"
+    - "{{ oel_repo_path }}"
+
+- name: download the centos rpms
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ centos_repo_path }}"
+    mode: '0755'
+  with_items: "{{ centos_rpms }}"
+
+- name: download the oel rpms
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ oel_repo_path }}"
+    mode: '0755'
+  with_items: "{{ oel_rpms }}"
+
+- name: create repo
+  shell: "createrepo {{ item }}"
+  with_items:
+    - "{{ oel_repo_path }}"
+    - "{{ centos_repo_path }}"
+
+- name: Add repository
+  yum_repository:
+    name: local
+    description: Local DVD repository
+    baseurl: "file://{{ centos_repo_path }}"
+    enabled: yes
+    gpgcheck: no
+
+- name: Make sure a service is running
+  systemd:
+    state: started
+    name: httpd

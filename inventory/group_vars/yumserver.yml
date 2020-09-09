@@ -1,0 +1,13 @@
+centos_rpms:
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/rpm-4.11.3-43.el7.x86_64.rpm
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/rpm-build-libs-4.11.3-43.el7.x86_64.rpm
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/rpm-libs-4.11.3-43.el7.x86_64.rpm
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/rpm-python-4.11.3-43.el7.x86_64.rpm
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/sudo-1.8.23-9.el7.x86_64.rpm
+
+
+oel_rpms:
+  - http://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/rsyslog-8.24.0-52.el7_8.2.x86_64.rpm
+  - http://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/curl-7.29.0-57.0.1.el7_8.1.x86_64.rpm
+  - http://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/libcurl-7.29.0-57.0.1.el7_8.1.x86_64.rpm
+  - http://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/ca-certificates-2020.2.41-70.0.el7_8.noarch.rpm
